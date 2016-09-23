@@ -38,18 +38,25 @@ func (kio *Kio) templateChoose(values ...string) string {
 
 //IsSet(section name) for optional
 func (kio *Kio) templateIsSet(name string) bool {
-	var option int
-	color.Set(color.FgYellow)
-	fmt.Println("Do you want optional ", name, "?")
-	color.Unset()
-	fmt.Print("[0] if no, [1] if yes: ")
-
-	fmt.Scanf("%d", &option)
-
-	if option == 1 {
+	if kio.reference[name] != "" {
+		fmt.Println("----", kio.reference[name])
 		return true
 	}
 
+	var str string
+	color.Set(color.FgYellow)
+	fmt.Println("Do you want optional ", name, "?")
+	color.Unset()
+	fmt.Print("No/Yes: ")
+
+	fmt.Scanf("%s", &str)
+
+	if str == "y" || str == "yes" || str == "ye" {
+		kio.reference[name] = "yes"
+		return true
+	}
+
+	kio.reference[name] = "no"
 	return false
 }
 

@@ -26,7 +26,7 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: {{ custom "MYSQL_PASSWORD" }}
 
-    {{ if isset "Redis image"}}
+    {{ if isset "Redis"}}
     redis:
       image: {{ choose "Redis image" "redis:latest" "redis:3.2" "redis:3.2.3-alpine" }}
     {{ end }}
