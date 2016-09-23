@@ -1,0 +1,32 @@
+version: '2'
+services:
+  db:
+    image: {{ choose "Database image" "mysql:latest" "mysql:5.7" "mysql:5.6" "mysql:5.5" }}
+    volumes:
+      - "./.data/wp_db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: {{ custom "MYSQL USER" }}
+      MYSQL_PASSWORD: {{ custom "MYSQL_PASSWORD" }}
+
+  wordpress:
+    depends_on:
+      - db
+    image: {{ choose "Database image" "wordpress:latest" "wordpress:4.6" "wordpress:4" }}
+    volumes:
+      - "./.data/wp_html:/var/www/html"
+    links:
+      - db
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_PASSWORD: {{ custom "MYSQL_PASSWORD" }}
+
+    {{ if isset "Redis image"}}
+    redis:
+      image: {{ choose "Redis image" "redis:latest" "redis:3.2" "redis:3.2.3-alpine" }}
+    {{ end }}
