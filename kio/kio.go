@@ -11,6 +11,7 @@ import (
 	"github.com/fatih/color"
 )
 
+//Kio structure
 type Kio struct {
 	name      string
 	input     string
@@ -19,6 +20,7 @@ type Kio struct {
 	FuncMap   template.FuncMap
 }
 
+//NewKio return a Kio element
 func NewKio(name, input, output string) *Kio {
 	return &Kio{
 		name:      name,

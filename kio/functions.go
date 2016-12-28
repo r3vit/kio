@@ -2,6 +2,7 @@ package kio
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/fatih/color"
 )
@@ -50,6 +51,8 @@ func (kio *Kio) templateIsSet(name string) bool {
 	fmt.Print("No/Yes: ")
 
 	fmt.Scanf("%s", &str)
+
+	str = strings.ToLower(str)
 
 	if str == "y" || str == "yes" || str == "ye" {
 		kio.reference[name] = "yes"
