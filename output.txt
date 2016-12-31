@@ -1,20 +1,20 @@
 version: '2'
 services:
   db:
-    image: Database image
+    image: mysql:latest
     volumes:
       - "./.data/wp_db:/var/lib/mysql"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: wordpress
       MYSQL_DATABASE: wordpress
-      MYSQL_USER: es
-      MYSQL_PASSWORD: yes
+      MYSQL_USER: 1
+      MYSQL_PASSWORD: 1
 
   wordpress:
     depends_on:
       - db
-    image: Database image
+    image: mysql:latest
     volumes:
       - "./.data/wp_html:/var/www/html"
     links:
@@ -24,9 +24,9 @@ services:
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_PASSWORD: yes
+      WORDPRESS_DB_PASSWORD: 1
 
     
     redis:
-      image: Redis image
+      image: redis:3.2
     
